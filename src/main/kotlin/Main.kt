@@ -82,9 +82,9 @@ fun readUserInput(): String {
         val input = readln()
 
         when {
-            input.isBlank() -> println("Please, enter some letter or digit")
-            input.length > 1 -> println("Please, enter exactly one letter or digit")
-            !isAlphaNumeric(input) -> println("Please, enter letter or digit, no other symbols are allowed")
+            input.isBlank() -> println("Please, enter some letter")
+            input.length > 1 -> println("Please, enter exactly one letter")
+            !isAlphabetic(input) -> println("Please, enter letter, no other symbols are allowed")
             else -> return input
         }
     }
@@ -196,4 +196,4 @@ fun drawHangman(mistakes: Int) {
 
 fun chooseWord(): String = File("src/main/resources/dictionary.txt").readLines().random()
 
-fun isAlphaNumeric(string: String): Boolean = string.lowercase() in "a".."z" || string.lowercase() in "0".."9"
+fun isAlphabetic(string: String): Boolean = string.lowercase() in "a".."z"
