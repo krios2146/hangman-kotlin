@@ -17,12 +17,43 @@ fun startHub() {
     when (input.uppercase()) {
         "P" -> println("Game is started")
         "R" -> println("Rules")
-        "E" -> return
+        "E" -> println("Exiting...")
         else -> {
             println("There is no such option")
             startHub()
         }
     }
+}
+
+fun startGame() {
+    val word = chooseWord()
+    var wordMask = "*".repeat(word.length)
+
+    var mistakes = 0
+
+    while (mistakes < 6) {
+        val guess = readUserInput()
+
+        wordMask = updateWordMask(guess, word, wordMask)
+
+        if (guess !in word) {
+            mistakes++
+        }
+
+        drawHangman(mistakes)
+        println(wordMask)
+
+        if (!wordMask.contains("*")) {
+            break
+        }
+    }
+
+    when {
+        mistakes == 6 -> println("You lost. The word was - $word")
+        mistakes < 6 -> println("You won, congrats!")
+    }
+
+    startHub()
 }
 
 fun readUserInput(): String {
@@ -36,6 +67,20 @@ fun readUserInput(): String {
             else -> return input
         }
     }
+}
+
+fun updateWordMask(guess: String, word: String, wordMask: String): String {
+    if (guess !in word) {
+        return wordMask
+    }
+
+    for (i in 0..word.length) {
+        if (word[i].lowercase() == guess.lowercase()) {
+            wordMask.replaceRange(i, i, guess)
+        }
+    }
+
+    return wordMask
 }
 
 fun chooseWord(): String = File("dictionary.txt").readLines().random()
