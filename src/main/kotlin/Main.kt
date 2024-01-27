@@ -15,7 +15,11 @@ fun startHub() {
     val input = readUserInput()
 
     when (input.uppercase()) {
-        "P" -> println("Game is started")
+        "P" -> {
+            println("Starting game...")
+            startGame()
+        }
+
         "R" -> println("Rules")
         "E" -> println("Exiting...")
         else -> {
@@ -28,20 +32,23 @@ fun startHub() {
 fun startGame() {
     val word = chooseWord()
     var wordMask = "*".repeat(word.length)
-
+    val guesses = mutableSetOf<String>()
     var mistakes = 0
 
     while (mistakes < 6) {
+        drawHangman(mistakes)
+        println(wordMask)
+        println("mistakes - $mistakes")
+        println("previous guesses - $guesses")
+
         val guess = readUserInput()
 
         wordMask = updateWordMask(guess, word, wordMask)
+        guesses.add(guess)
 
         if (guess !in word) {
             mistakes++
         }
-
-        drawHangman(mistakes)
-        println(wordMask)
 
         if (!wordMask.contains("*")) {
             break
@@ -74,15 +81,105 @@ fun updateWordMask(guess: String, word: String, wordMask: String): String {
         return wordMask
     }
 
-    for (i in 0..word.length) {
+    var updatedWordMask = wordMask
+
+    for (i in word.indices) {
         if (word[i].lowercase() == guess.lowercase()) {
-            wordMask.replaceRange(i, i, guess)
+            updatedWordMask = updatedWordMask.replaceRange(i, i + 1, guess)
         }
     }
 
-    return wordMask
+    return updatedWordMask
 }
 
-fun chooseWord(): String = File("dictionary.txt").readLines().random()
+fun drawHangman(mistakes: Int) {
+    when (mistakes) {
+        0 -> println(
+            """
+                      +---+
+                      |   |
+                          |
+                          |
+                          |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        1 -> println(
+            """
+                      +---+
+                      |   |
+                      O   |
+                          |
+                          |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        2 -> println(
+            """
+                      +---+
+                      |   |
+                      0   |
+                      |   |
+                          |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        3 -> println(
+            """
+                      +---+
+                      |   |
+                      0   |
+                     /|   |
+                          |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        4 -> println(
+            """
+                      +---+
+                      |   |
+                      0   |
+                     /|\  |
+                          |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        5 -> println(
+            """
+                      +---+
+                      |   |
+                      0   |
+                     /|\  |
+                     /    |
+                          |
+                    =========
+            """.trimIndent()
+        )
+
+        6 -> println(
+            """
+                      +---+
+                      |   |
+                      0   |
+                     /|\  |
+                     / \  |
+                          |
+                    =========
+            """.trimIndent()
+        )
+    }
+}
+
+fun chooseWord(): String = File("src/main/resources/dictionary.txt").readLines().random()
 
 fun isAlphaNumeric(string: String): Boolean = string.lowercase() in "a".."z" || string.lowercase() in "0".."9"
