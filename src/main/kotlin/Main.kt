@@ -10,7 +10,7 @@ fun main() {
 
 fun startHub() {
     println()
-    println("[P]lay   [R]ules    [E]xit") // maybe results & settings later
+    println("[P]lay | [R]ules | [E]xit") // maybe results & settings later
 
     val input = readUserInput()
 
@@ -20,7 +20,11 @@ fun startHub() {
             startGame()
         }
 
-        "R" -> println("Rules")
+        "R" -> {
+            showRules()
+            startHub()
+        }
+
         "E" -> println("Exiting...")
         else -> {
             println("There is no such option")
@@ -57,10 +61,20 @@ fun startGame() {
 
     when {
         mistakes == 6 -> println("You lost. The word was - $word")
-        mistakes < 6 -> println("You won, congrats!")
+        mistakes < 6 -> println("You won, congrats! The word - $word")
     }
 
     startHub()
+}
+
+fun showRules() {
+    println("Rules:")
+    println("1. Guess the hidden word by picking letters.")
+    println("2. If you guess a letter right, it shows up in the word.")
+    println("3. If you guess wrong, the part of a hangman will be drawn.")
+    println("4. Try to guess the word before the hangman is fully drawn.")
+    println("5. If you guess it right, you win! If not, you lose.")
+    println("6. You can play again if you want.")
 }
 
 fun readUserInput(): String {
