@@ -2,6 +2,79 @@ package dev.krios2146
 
 var dictionary: List<String> = listOf()
 
+const val ZERO_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+"""
+const val ONE_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+"""
+const val TWO_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  0   |
+  |   |
+      |
+      |
+=========
+"""
+const val THREE_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  0   |
+ /|   |
+      |
+      |
+=========
+"""
+const val FOUR_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  0   |
+ /|\  |
+      |
+      |
+=========
+"""
+const val FIVE_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  0   |
+ /|\  |
+ /    |
+      |
+=========
+"""
+const val SIX_MISTAKE_HANGMAN: String = """
+  +---+
+  |   |
+  0   |
+ /|\  |
+ / \  |
+      |
+=========
+"""
+const val ERROR_HANGMAN: String = """
+  +---+
+  E   |
+  R   |
+  R   |
+  O   |
+  R   |
+=========
+"""
+
 fun main() {
     println()
     println("Welcome to the hangman game!")
@@ -107,91 +180,18 @@ fun updateWordMask(guess: String, word: String, wordMask: String): String {
 }
 
 fun drawHangman(mistakes: Int) {
-    when (mistakes) {
-        0 -> println(
-            """
-                      +---+
-                      |   |
-                          |
-                          |
-                          |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        1 -> println(
-            """
-                      +---+
-                      |   |
-                      O   |
-                          |
-                          |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        2 -> println(
-            """
-                      +---+
-                      |   |
-                      0   |
-                      |   |
-                          |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        3 -> println(
-            """
-                      +---+
-                      |   |
-                      0   |
-                     /|   |
-                          |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        4 -> println(
-            """
-                      +---+
-                      |   |
-                      0   |
-                     /|\  |
-                          |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        5 -> println(
-            """
-                      +---+
-                      |   |
-                      0   |
-                     /|\  |
-                     /    |
-                          |
-                    =========
-            """.trimIndent()
-        )
-
-        6 -> println(
-            """
-                      +---+
-                      |   |
-                      0   |
-                     /|\  |
-                     / \  |
-                          |
-                    =========
-            """.trimIndent()
-        )
-    }
+    println(
+        when (mistakes) {
+            0 -> ZERO_MISTAKE_HANGMAN
+            1 -> ONE_MISTAKE_HANGMAN
+            2 -> TWO_MISTAKE_HANGMAN
+            3 -> THREE_MISTAKE_HANGMAN
+            4 -> FOUR_MISTAKE_HANGMAN
+            5 -> FIVE_MISTAKE_HANGMAN
+            6 -> SIX_MISTAKE_HANGMAN
+            else -> ERROR_HANGMAN
+        }.trimIndent()
+    )
 }
 
 fun chooseWord(): String {
