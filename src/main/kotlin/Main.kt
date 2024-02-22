@@ -1,6 +1,6 @@
 package dev.krios2146
 
-import java.io.File
+var dictionary: List<String> = listOf()
 
 fun main() {
     println()
@@ -194,6 +194,15 @@ fun drawHangman(mistakes: Int) {
     }
 }
 
-fun chooseWord(): String = File("src/main/resources/dictionary.txt").readLines().random()
+fun chooseWord(): String {
+    if (dictionary.isEmpty()) {
+        val classLoader = ClassLoader.getSystemClassLoader()
+        dictionary = classLoader.getResourceAsStream("dictionary.txt")
+            ?.bufferedReader()
+            ?.readLines()
+            .orEmpty()
+    }
+    return if (dictionary.isNotEmpty()) dictionary.random() else "development"
+}
 
 fun isAlphabetic(string: String): Boolean = string.lowercase() in "a".."z"
