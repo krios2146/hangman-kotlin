@@ -152,13 +152,13 @@ fun showRules() {
 
 fun readUserInput(): String {
     while (true) {
-        val input = readln()
-
-        when {
-            input.isBlank() -> println("Please, enter some letter")
-            input.length > 1 -> println("Please, enter exactly one letter")
-            input.isNonAlphabetic() -> println("Please, enter letter, no other symbols are allowed")
-            else -> return input
+        readln().let {
+            when {
+                it.isBlank() -> println("Please, enter some letter")
+                it.length > 1 -> println("Please, enter exactly one letter")
+                it.isNonAlphabetic() -> println("Please, enter letter, no other symbols are allowed")
+                else -> return it
+            }
         }
     }
 }
