@@ -76,32 +76,34 @@ const val ERROR_HANGMAN: String = """
 """
 
 fun main() {
-    println()
-    println("Welcome to the hangman game!")
+    println("\nWelcome to the hangman game!")
     startHub()
 }
 
 fun startHub() {
-    println()
-    println("[P]lay | [R]ules | [E]xit") // maybe results & settings later
+    while (true) {
+        println("\n[P]lay | [R]ules | [E]xit") // maybe results & settings later
 
-    val input = readUserInput()
+        val input = readUserInput()
 
-    when (input.uppercase()) {
-        "P" -> {
-            println("Starting game...")
-            startGame()
-        }
+        when (input.uppercase()) {
+            "P" -> {
+                println("Starting game...")
+                startGame()
+            }
 
-        "R" -> {
-            showRules()
-            startHub()
-        }
+            "R" -> {
+                showRules()
+            }
 
-        "E" -> println("Exiting...")
-        else -> {
-            println("There is no such option")
-            startHub()
+            "E" -> {
+                println("Exiting...")
+                break
+            }
+
+            else -> {
+                println("There is no such option")
+            }
         }
     }
 }
@@ -136,8 +138,6 @@ fun startGame() {
         mistakes == 6 -> println("You lost. The word was - $word")
         mistakes < 6 -> println("You won, congrats! The word - $word")
     }
-
-    startHub()
 }
 
 fun showRules() {
