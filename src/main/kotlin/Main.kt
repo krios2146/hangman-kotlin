@@ -157,7 +157,7 @@ fun readUserInput(): String {
         when {
             input.isBlank() -> println("Please, enter some letter")
             input.length > 1 -> println("Please, enter exactly one letter")
-            !isAlphabetic(input) -> println("Please, enter letter, no other symbols are allowed")
+            input.isNonAlphabetic() -> println("Please, enter letter, no other symbols are allowed")
             else -> return input
         }
     }
@@ -205,4 +205,4 @@ fun chooseWord(): String {
     return if (dictionary.isNotEmpty()) dictionary.random() else "development"
 }
 
-fun isAlphabetic(string: String): Boolean = string.lowercase() in "a".."z"
+fun String.isNonAlphabetic(): Boolean = this.lowercase() !in "a".."z"
